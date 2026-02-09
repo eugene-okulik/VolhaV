@@ -17,7 +17,7 @@ my_dict['list'].append(5)
 my_dict['list'].pop(1)
 
 # ‘dict’: добавьте элемент с ключом ('i am a tuple',) и любым значением
-my_dict['dict']['i am a tuple'] = True
+my_dict['dict'][('i am a tuple',)] = True
 
 # ‘dict’:удалите какой-нибудь элемент
 del my_dict['dict']['JavaScript']
