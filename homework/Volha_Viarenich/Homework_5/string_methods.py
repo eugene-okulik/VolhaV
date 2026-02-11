@@ -35,7 +35,4 @@ print(int(result_3[index_number_3::]) + 10)
 students = ['Ivanov', 'Petrov', 'Sidorov']
 subjects = ['math', 'biology', 'geography']
 
-student_1, student_2, student_3 = students
-subject_1, subject_2, subject_3 = subjects
-
-print(f"Students {student_1}, {student_2}, {student_3} study these subjects: {subject_1}, {subject_2}, {subject_3}")
+print(f"Students {', '.join(students)} study these subjects: {', '.join(subjects)}")
