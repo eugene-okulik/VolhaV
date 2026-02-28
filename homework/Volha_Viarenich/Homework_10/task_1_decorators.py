@@ -9,7 +9,6 @@ def finish_me(func):
     return wrapper
 
 
-
 @finish_me
 def decor_func():
     print("Превед, медвед")
