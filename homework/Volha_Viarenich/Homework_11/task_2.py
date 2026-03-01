@@ -24,10 +24,10 @@ class SchoolBook(Book):
         self.is_task = is_task
 
     def school_description(self):
+        reserved = ', зарезервирована' if self.is_reserved else ''
         print(
             f'Название: {self.subject}, Автор: {self.author}, страниц: {self.quantity_of_pages}, '
-            f'материал: {self.pages_material}'
-            f'{', зарезервирована' if self.is_reserved else ''}'
+            f'материал: {self.pages_material}{reserved}'
         )
 
 

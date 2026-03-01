@@ -36,10 +36,10 @@ class HorrorBook(Book):
         super().__init__(title, author, ibsn, quantity_of_pages, is_reserved)
 
     def book_description(self):
+        reserved = ', зарезервирована' if self.is_reserved else ''
         print(
             f'Название: {self.title}, Автор: {self.author}, страниц: {self.quantity_of_pages}, '
-            f'материал: {self.pages_material}'
-            f'{', зарезервирована' if self.is_reserved else ''}'
+            f'материал: {self.pages_material}{reserved}'
         )
 
 
