@@ -22,18 +22,18 @@
 class Book:
     pages_material = 'paper'
     text = True
+    is_reserved = False
 
-    def __init__(self, title, author, ibsn, quantity_of_pages, is_reserved):
+    def __init__(self, title, author, ibsn, quantity_of_pages):
         self.title = title
         self.author = author
         self.ibsn = ibsn
         self.quantity_of_pages = quantity_of_pages
-        self.is_reserved = is_reserved
 
 
 class HorrorBook(Book):
-    def __init__(self, title, author, ibsn, quantity_of_pages, is_reserved):
-        super().__init__(title, author, ibsn, quantity_of_pages, is_reserved)
+    def __init__(self, title, author, ibsn, quantity_of_pages):
+        super().__init__(title, author, ibsn, quantity_of_pages)
 
     def book_description(self):
         reserved = ', зарезервирована' if self.is_reserved else ''
@@ -44,11 +44,13 @@ class HorrorBook(Book):
 
 
 if __name__ == "__main__":
-    dark_tower = HorrorBook("Dark Tower", "Stephen King", '5-17-033693-4', 816, True)
-    chapaev_i_pustota = HorrorBook("Чапаев и Пустота", "В. Пелевин", "1-17-033693-2", 384, False)
-    shining = HorrorBook("The Shining", "Stephen King", '7-17-033693-8', 640, False)
-    interview = HorrorBook("Interview with the vampire", "Anne Race", None, 583, False)
-    twin_peaks = HorrorBook("Twin Peaks", "Mark Frost", '9-17-033693-8', 777, False)
+    dark_tower = HorrorBook("Dark Tower", "Stephen King", '5-17-033693-4', 816)
+    chapaev_i_pustota = HorrorBook("Чапаев и Пустота", "В. Пелевин", "1-17-033693-2", 384)
+    shining = HorrorBook("The Shining", "Stephen King", '7-17-033693-8', 640)
+    interview = HorrorBook("Interview with the vampire", "Anne Race", None, 583)
+    twin_peaks = HorrorBook("Twin Peaks", "Mark Frost", '9-17-033693-8', 777)
+
+    dark_tower.is_reserved = True
 
     dark_tower.book_description()
     chapaev_i_pustota.book_description()
