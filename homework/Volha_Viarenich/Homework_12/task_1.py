@@ -27,23 +27,28 @@ class Flower:
 
 
 class Rose(Flower):
-    name = "Rose"
+    def __init__(self, color, length, price, freshness, life_time):
+        super().__init__("Rose", color, length, price, freshness, life_time)
 
 
 class Tulip(Flower):
-    name = "Tulip"
+    def __init__(self, color, length, price, freshness, life_time):
+        super().__init__("Tulip", color, length, price, freshness, life_time)
 
 
 class Lily(Flower):
-    name = "Lily"
+    def __init__(self, color, length, price, freshness, life_time):
+        super().__init__("Lily", color, length, price, freshness, life_time)
 
 
 class Peony(Flower):
-    name = "Peony"
+    def __init__(self, color, length, price, freshness, life_time):
+        super().__init__("Peony", color, length, price, freshness, life_time)
 
 
 class Orchid(Flower):
-    name = "Orchid"
+    def __init__(self, color, length, price, freshness, life_time):
+        super().__init__("Orchid", color, length, price, freshness, life_time)
 
 
 class Bouquet:
@@ -51,35 +56,28 @@ class Bouquet:
         self.flowers_list = flowers_list
 
     def bouquet_total_price(self):
-        return f"Total price: {sum(i.price for i in self.flowers_list)} byn."
+        return f"Total price: {sum(f.price for f in self.flowers_list)} byn."
 
     def average_life_time(self):
-        average_value = sum(i.life_time for i in self.flowers_list) // len(self.flowers_list)
-        print(f"Average life time of bouquet: {average_value}d.")
+        average_value = sum(j.life_time for j in self.flowers_list) // len(self.flowers_list)
+        return f"Average life time of bouquet: {average_value}d."
 
     def average_for_find(self):
-        return sum(i.life_time for i in self.flowers_list) // len(self.flowers_list)
+        return sum(k.life_time for k in self.flowers_list) // len(self.flowers_list)
 
     def sort_by(self, param):
-        sorted_list = sorted(self.flowers_list, key=lambda x: getattr(x, param))
-        print(f"Flowers was sorted by {param}:")
-        for flower in range(len(sorted_list)):
-            print(f"Flower {flower + 1}.", sorted_list[flower])
+        return self.flowers_list.sort(key=lambda x: getattr(x, param))
 
-    def find_avg_live_time(self):
-        avg_life_time = self.average_for_find()
-        result = [f for f in self.flowers_list if f.life_time == avg_life_time]
-        print(f"Flowers with the average life time {avg_life_time} days: {len(result)} шт.")
-        for flower in result:
-            print(f"- {flower.name}, {flower.color}")
+    def find_by(self, param, value):
+        return [flower for flower in self.flowers_list if getattr(flower, param) == value]
 
 
-rose1 = Rose(Rose.name, "red", 75, 11, 1, 7)
-rose2 = Rose(Rose.name, "white", 80, 12, 3, 7)
-lily1 = Lily(Lily.name, "white", 100, 15, 2, 10)
-peony1 = Peony(Peony.name, "rose", 110, 18, 1, 10)
-orchid1 = Orchid(Orchid.name, "violet", 60, 25, 1, 30)
-tulip1 = Tulip(Tulip.name, "black", 30, 20, 1, 8)
+rose1 = Rose("red", 75, 11, 1, 7)
+rose2 = Rose("white", 80, 12, 3, 7)
+lily1 = Lily("white", 100, 15, 2, 10)
+peony1 = Peony("pink", 110, 18, 1, 10)
+orchid1 = Orchid("violet", 60, 25, 1, 30)
+tulip1 = Tulip("black", 30, 20, 1, 8)
 
 flowers_1 = [rose1, lily1, peony1]
 flowers_2 = [orchid1]
@@ -90,12 +88,11 @@ bouquet_2 = Bouquet(flowers_2)
 bouquet_3 = Bouquet(flowers_3)
 
 print(bouquet_3.bouquet_total_price())
-bouquet_2.average_life_time()
-bouquet_3.sort_by("price")
-bouquet_3.sort_by("length")
-bouquet_3.sort_by("freshness")
-bouquet_3.sort_by("color")
+print(bouquet_2.average_life_time())
 
-bouquet_1.find_avg_live_time()
-bouquet_2.find_avg_live_time()
-bouquet_3.find_avg_live_time()
+bouquet_1.sort_by("color")
+for i, fl in enumerate(bouquet_1.flowers_list, start=1):
+    print(f"Flower {i}. {fl}")
+
+print(bouquet_2.find_by("life_time", bouquet_2.average_for_find()))
+print(bouquet_3.find_by("price", 15))
