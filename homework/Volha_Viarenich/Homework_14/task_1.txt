@@ -1,0 +1,65 @@
+Создайте в базе данных полный набор информации о студенте, заполнив все таблички:
+
+1. Создайте студента (student)
+- INSERT INTO students (name, second_name, group_id) VALUES ('Volha', 'Sidorova', 1)
+
+2. booksСоздайте несколько книг (books) и укажите, что ваш созданный студент взял их.
+- INSERT INTO books (title, taken_by_student_id) VALUES ('Dark Tower', 22485)
+- INSERT INTO books (title, taken_by_student_id) VALUES ('Twin Peaks', 22485)
+- INSERT INTO books (title, taken_by_student_id) VALUES ('Python AQA for Beginners', 22485)
+
+Создайте группу (group) и определите своего студента туда.
+- INSERT INTO `groups`(title, start_date, end_date) VALUES ('Python AQA Engineers', '19-01-2026', '19-07-2026')
+- UPDATE students SET group_id = 22150 WHERE id = 22485
+
+Создайте несколько учебных предметов (subjects)
+- INSERT INTO subjects (title) VALUES ('Biology of frogs')
+- INSERT INTO subjects (title) VALUES ('Astronomy of sun system')
+- INSERT INTO subjects (title) VALUES ('Blueberry eating')
+
+Создайте по два занятия для каждого предмета (lessons)
+- INSERT INTO lessons (title, subject_id) VALUES ('Frogs intro', 14239)
+- INSERT INTO lessons (title, subject_id) VALUES ('Frogs final', 14239)
+- INSERT INTO lessons (title, subject_id) VALUES ('Sun system intro', 14240)
+- INSERT INTO lessons (title, subject_id) VALUES ('Sun system final', 14240)
+- INSERT INTO lessons (title, subject_id) VALUES ('Blueberry intro', 14241)
+- INSERT INTO lessons (title, subject_id) VALUES ('Blueberry final', 14241)
+
+Поставьте своему студенту оценки (marks) для всех созданных вами занятий
+Все действия нужно выполнить именно в том порядке, который указан здесь в задании.
+- INSERT INTO marks (value, lesson_id, student_id) VALUES (9, 75607, 22485)
+- INSERT INTO marks (value, lesson_id, student_id) VALUES (8, 75608, 22485)
+- INSERT INTO marks (value, lesson_id, student_id) VALUES (8, 75609, 22485)
+- INSERT INTO marks (value, lesson_id, student_id) VALUES (9, 75610, 22485)
+- INSERT INTO marks (value, lesson_id, student_id) VALUES (10, 75611, 22485)
+- INSERT INTO marks (value, lesson_id, student_id) VALUES (9, 75612, 22485)
+
+Получите информацию из базы данных:
+Все оценки студента
+- SELECT * FROM marks WHERE student_id = 22485
+
+Все книги, которые находятся у студента
+- SELECT * FROM books WHERE taken_by_student_id = 22485
+
+Для вашего студента выведите всё, что о нем есть в базе: группа, книги, оценки с названиями занятий и предметов
+(всё одним запросом с использованием Join)
+SELECT
+name,
+second_name,
+`groups`.title AS group_title,
+books.title AS book_taken_by_student,
+subjects.title AS subject,
+lessons.title AS lesson,
+marks.value AS mark_value
+FROM students
+join `groups`
+ON students.group_id = groups.id
+join books
+ON students.id = books.taken_by_student_id
+join marks
+ON students.id = marks.student_id
+join lessons
+ON marks.lesson_id = lessons.id
+join subjects
+ON lessons.subject_id = subjects.id
+WHERE students.id = 22485
