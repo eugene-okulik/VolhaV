@@ -1,7 +1,7 @@
 Создайте в базе данных полный набор информации о студенте, заполнив все таблички:
 
 1. Создайте студента (student)
-- INSERT INTO students (name, second_name, group_id) VALUES ('Volha', 'Sidorova', 1)
+- INSERT INTO students (name, second_name, group_id) VALUES ('Volha', 'Sidorova', NULL)
 
 2. booksСоздайте несколько книг (books) и укажите, что ваш созданный студент взял их.
 - INSERT INTO books (title, taken_by_student_id) VALUES ('Dark Tower', 22485)
