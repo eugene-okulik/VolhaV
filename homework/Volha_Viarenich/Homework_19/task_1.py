@@ -67,7 +67,7 @@ def patch_an_object():
     }
     headers = {"Content-Type": "application/json"}
 
-    response = requests.put(f'{url}{object_id}', json=body, headers=headers).json()
+    response = requests.patch(f'{url}{object_id}', json=body, headers=headers).json()
     assert response["data"]["Klichka"] == "Nusha"
     clear(object_id)
 
