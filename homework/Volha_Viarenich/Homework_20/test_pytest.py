@@ -49,8 +49,8 @@ def test_get_all_objects(print_start_and_completed, print_before_and_after):
     assert len(response) == 1, 'not all posts returned'
 
 
-def test_get_one_object(print_before_and_after):
-    post_id = 1300
+def test_get_one_object(print_before_and_after, new_object):
+    post_id = new_object
     response = requests.get(f'{url}/{post_id}')
     assert response.status_code == 200
 
