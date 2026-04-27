@@ -3,6 +3,7 @@ import requests
 
 base_url = 'http://objapi.course.qa-practice.com/object'
 
+
 @pytest.fixture(scope='session')
 def print_start_and_completed():
     print("Start testing")
@@ -15,6 +16,7 @@ def print_before_and_after():
     print("Before test")
     yield
     print(" After test")
+
 
 @pytest.fixture()
 def new_object():
