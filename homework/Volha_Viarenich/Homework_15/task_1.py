@@ -9,9 +9,9 @@ db = mysql.connect(
 )
 cursor = db.cursor(dictionary=True)
 
-
 # 1. Создайте студента (student)
-cursor.execute("INSERT INTO students (name, second_name, group_id) VALUES ('Volha', 'Sidorova', NULL)")
+insert_student_query = "INSERT INTO students (name, second_name, group_id) VALUES (%s, %s, %s)"
+cursor.execute(insert_student_query, ['Volha', 'Sidorova', None])
 student_id = cursor.lastrowid
 
 # 2. books Создайте несколько книг (books) и укажите, что ваш созданный студент взял их.
@@ -25,44 +25,53 @@ cursor.executemany(
 )
 
 # 3. Создайте группу (group) и определите своего студента туда.
-cursor.execute(
-    "INSERT INTO `groups`(title, start_date, end_date) VALUES ('Python AQA Engineers', '19-01-2026', '19-07-2026')")
+insert_group_query = "INSERT INTO `groups`(title, start_date, end_date) VALUES (%s, %s, %s)"
+cursor.execute(insert_group_query, ['Python AQA Engineers', '19-01-2026', '19-07-2026'])
 group_id = cursor.lastrowid
 cursor.execute(f"UPDATE students SET group_id = {group_id} WHERE id = {student_id}")
 
 # 4.Создайте несколько учебных предметов (subjects)
-cursor.execute("INSERT INTO subjects (title) VALUES ('Biology of frogs')")
-subject_1_id = cursor.lastrowid
-cursor.execute("INSERT INTO subjects (title) VALUES ('Astronomy of sun system')")
-subject_2_id = cursor.lastrowid
-subject3 = cursor.execute("INSERT INTO subjects (title) VALUES ('Blueberry eating')")
-subject_3_id = cursor.lastrowid
+insert_subjects_query = "INSERT INTO subjects (title) VALUES (%s)"
+subjects_data = [
+    'Biology of frogs',
+    'Astronomy of sun system',
+    'Blueberry eating'
+]
+subject_ids = []
+
+for subject in subjects_data:
+    cursor.execute(insert_subjects_query, [subject])
+    subject_ids.append(cursor.lastrowid)
 
 # Создайте по два занятия для каждого предмета (lessons)
-cursor.execute(f"INSERT INTO lessons (title, subject_id) VALUES ('Frogs intro', {subject_1_id})")
-lesson_1_1_id = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons (title, subject_id) VALUES ('Frogs final', {subject_1_id})")
-lesson_1_2_id = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons (title, subject_id) VALUES ('Sun system intro', {subject_2_id})")
-lesson_2_1_id = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons (title, subject_id) VALUES ('Sun system final', {subject_2_id})")
-lesson_2_2_id = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons (title, subject_id) VALUES ('Blueberry intro', {subject_3_id})")
-lesson_3_1_id = cursor.lastrowid
-cursor.execute(f"INSERT INTO lessons (title, subject_id) VALUES ('Blueberry final', {subject_3_id})")
-lesson_3_2_id = cursor.lastrowid
+insert_lessons_query = "INSERT INTO lessons (title, subject_id) VALUES (%s, %s)"
+
+lessons_data = [
+    ['Frogs intro', subject_ids[0]],
+    ['Frogs final', subject_ids[0]],
+    ['Sun system intro', subject_ids[1]],
+    ['Sun system final', subject_ids[1]],
+    ['Blueberry intro', subject_ids[2]],
+    ['Blueberry final', subject_ids[2]]
+]
+
+lesson_ids = []
+
+for lesson_title, subject_id in lessons_data:
+    cursor.execute(insert_lessons_query, [lesson_title, subject_id])
+    lesson_ids.append(cursor.lastrowid)
 
 # Поставьте своему студенту оценки (marks) для всех созданных вами занятий
 # Все действия нужно выполнить именно в том порядке, который указан здесь в задании.
 insert_marks_query = "INSERT INTO marks (value, lesson_id, student_id) VALUES (%s, %s, %s)"
 cursor.executemany(
     insert_marks_query, [
-        (9, lesson_1_1_id, student_id),
-        (8, lesson_1_2_id, student_id),
-        (8, lesson_2_1_id, student_id),
-        (10, lesson_2_2_id, student_id),
-        (9, lesson_3_1_id, student_id),
-        (9, lesson_3_2_id, student_id)
+        (9, lesson_ids[0], student_id),
+        (8, lesson_ids[1], student_id),
+        (8, lesson_ids[2], student_id),
+        (10, lesson_ids[3], student_id),
+        (9, lesson_ids[4], student_id),
+        (9, lesson_ids[5], student_id)
     ]
 )
 
