@@ -2,6 +2,7 @@ import requests
 import allure
 from test_api_homework_22.endpoints.endpoint import Endpoint
 
+
 class UpdateObjectPartly(Endpoint):
 
     @allure.step('Partly update the object')
