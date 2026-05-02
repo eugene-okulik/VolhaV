@@ -17,11 +17,9 @@ class MainUser(HttpUser):
     def get_all_objects(self):
         self.client.get('/object', headers=self.headers)
 
-
     @task(3)
     def get_one_object(self):
         self.client.get(f'/object/{self.object_id}', headers=self.headers)
-
 
     def on_stop(self):
         if self.object_id:
